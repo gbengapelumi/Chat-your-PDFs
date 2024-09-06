@@ -1,0 +1,5 @@
+venv/
+evals.log
+app.log
+.env
+test.py
