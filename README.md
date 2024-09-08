@@ -67,6 +67,7 @@ The application is specifically developed for medical students to streamline the
 
 ## Live Application
 The application is deployed and live at Streamlit Live URL. You can access it to interact with the application and see it in action
+To access the live application, click this: https://oluwagbenga-chat-your-pdfs.streamlit.app/
 
 ## Future Improvements
 - **Model Optimization:** Fine-tune or update models for better performance.
