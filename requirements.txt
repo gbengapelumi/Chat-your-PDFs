@@ -2,7 +2,8 @@ langchain
 langchain-community
 langchain-groq
 protoc_gen_openapiv2
-langchain-pinecone
+langchain_mistralai
+langchain_google_genai
 PyPDF2
 python-dotenv
 streamlit

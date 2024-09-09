@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import logging
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
@@ -9,8 +10,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
 from models import ModelHandler
-from prompt_engineering import create_retrieval_qa_chain
 from evaluation import log_evaluation_result
+
 
 # Set up logging
 logging.basicConfig(
@@ -71,7 +72,6 @@ def get_conversation_chain(vectorstore, selected_model):
     """Create a conversational retrieval chain with the selected model."""
     try:
         llm = model_handler.models[selected_model]
-        conversation_chain = create_retrieval_qa_chain(llm, vectorstore)
 
         memory = ConversationBufferMemory(
             memory_key="chat_history", return_messages=True
@@ -86,9 +86,10 @@ def get_conversation_chain(vectorstore, selected_model):
     return conversation_chain
 
 
-def handle_userinput(user_question, selected_model):
+def handle_userinput(user_question):
     """Handles user input by running the selected model."""
     try:
+        # response = st.session_state.conversation({"question": user_question})
         response = st.session_state.conversation({"question": user_question})
         st.session_state.chat_history = response["chat_history"]
 
@@ -129,6 +130,7 @@ def evaluate_generation_accuracy():
 
 def main():
     load_dotenv()
+
     st.set_page_config("Chat with Multiple PDFs", page_icon=":books:")
     st.write(css, unsafe_allow_html=True)
 
@@ -148,7 +150,7 @@ def main():
 
     user_question = st.text_input("Ask a question about your documents:")
     if user_question and st.session_state.conversation:
-        handle_userinput(user_question, selected_model)
+        handle_userinput(user_question)
 
     with st.sidebar:
         st.subheader("Your documents")
